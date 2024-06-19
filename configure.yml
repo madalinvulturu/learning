@@ -1,8 +1,10 @@
 ---
+
 - hosts: all
-  gather_facts: no
+  become: true
   tasks:
-  
-    - name: POWEROFF
-      command: /sbin/shutdown -h now
-#      sudo: yes
+
+  - name: udpate repository index
+    apt:
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
