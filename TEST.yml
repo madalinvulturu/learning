@@ -11,6 +11,14 @@
         update_cache: yes
       when: ansible_distribution == "CentOS"
 
+    - name: install updates (Ubunt)
+      tags: always
+      apt:
+        up:  yes
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
+
+
 - hosts: web_servers
   become: true
   tasks:
