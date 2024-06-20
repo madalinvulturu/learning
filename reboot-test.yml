@@ -7,14 +7,25 @@
 #      command: /sbin/shutdown -h now
   
     - name: install udpates (CentOS)
-      tags: centos
+      tags: always
       dnf:
         update_only: yes
         update_cache: yes
       when: ansible_distribution == "CentOS"
     
     - name: install udpates (Ubuntu)
-      tags: ubuntu
+      tags: always
+      apt:
+        upgrade: dist
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
+
+- hosts: web_servers
+  become: true
+  tasks:
+
+    - name: install apached udpates (Ubuntu)
+      tags: apache,apache2,ubuntu
       apt:
         upgrade: dist
         update_cache: yes
