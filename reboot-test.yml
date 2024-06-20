@@ -24,9 +24,18 @@
   become: true
   tasks:
 
-    - name: install apached udpates (Ubuntu)
+    - name: install apache&PHP udpates (Ubuntu)
       tags: apache,apache2,ubuntu
       apt:
-        upgrade: dist
-        update_cache: yes
+        name:
+          - apache2
+          - lib2apache2-mod-php
       when: ansible_distribution == "Ubuntu"
+
+    - name: install apache&PHP udpates (CentOS)
+      tags: apache,httpd,centos
+      apt:
+        name:
+          - httpd
+          - php
+      when: ansible_distribution == "CentOS"
