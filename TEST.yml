@@ -18,27 +18,11 @@
       changed_when: false
       when: ansible_distribution == "Ubuntu"
 
-    - name: create pasare user
-      tags: always
-      user:
-        name: pasare
-        groups: root
-
     - name: add SSH Key for pasare
       tags: always
       authorized_key:
         user: pasare
         key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID3Y2osc8mFJVOCE4LGyl3/psbjMBMbg9qYlM1kwOaog ANSIBLE"
-
-    - name: add SUDOERS file for PASARE
-      tags: always
-      copy:
-        src: sudoer_pasare
-        dest: /etc/sudoers.d/pasare
-        owner: root
-        group: root
-        mode: 0440
-
 
 - hosts: web_servers
   become: true
