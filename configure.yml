@@ -2,7 +2,7 @@
 
 - hosts: all
   become: true
-  tasks:
+  pre_tasks: always
 
   - name: install udpates (CentOS)
     tags: always
@@ -13,6 +13,20 @@
  
   - name: install udpates (Ubuntu)
     tags: always
+    apt:
+      upgrade: dist
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+      - name: install udpates (CentOS)
+    tags: apache,httpd,centos
+    dnf:
+      update_only: yes
+      update_cache: yes
+    when: ansible_distribution == "CentOS"
+ 
+  - name: install udpates (Ubuntu)
+    tags: apache,apache2,ubuntu
     apt:
       upgrade: dist
       update_cache: yes
