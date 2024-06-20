@@ -12,3 +12,10 @@
         update_only: yes
         update_cache: yes
       when: ansible_distribution == "CentOS"
+    
+    - name: install udpates (Ubuntu)
+      tags: always
+      apt:
+        upgrade: dist
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
