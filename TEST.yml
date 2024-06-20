@@ -49,6 +49,14 @@
         enabled: yes
       when: ansible_distribution == "CentOS"      
 
+    - name: change e-mail address for admin/CentOS
+      tags: apache,httpd,CentOS
+      lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: 'ˆServerAdmin'
+        line: ServerAdmin madalin@acasa.com
+      when: ansible_distribution == "CentOS"      
+
 
 
 #- hosts: workstations
