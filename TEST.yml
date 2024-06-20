@@ -54,7 +54,7 @@
       lineinfile:
         path: /etc/httpd/conf/httpd.conf
         regexp: 'ˆServerAdmin'
-        line: ServerAdmin madalinDOWN@acasa.com
+        line: ServerAdmin madalinUP@acasa.com
       when: ansible_distribution == "CentOS"
       register: httpd
 
