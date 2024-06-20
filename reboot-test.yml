@@ -24,24 +24,6 @@
   become: true
   tasks:
 
-    - name: install apache&PHP udpates (Ubuntu)
-      tags: apache,apache2,ubuntu
-      apt:
-        name:
-          - apache2
-          - lib2apache2-mod-php
-        state: latest
-      when: ansible_distribution == "Ubuntu"
-
-    - name: install apache&PHP udpates (CentOS)
-      tags: apache,httpd,centos
-      dnf:
-        name:
-          - httpd
-          - php
-        state: latest
-      when: ansible_distribution == "CentOS"
-
     - name: copy default html file for site
       tags: apache,apache2,httpd
       copy:
