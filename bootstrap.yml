@@ -1,0 +1,88 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+    - name: install updates (CentOS)
+      tags: always
+      dnf:
+        update_only:  yes
+        update_cache: yes
+      when: ansible_distribution == "CentOS"
+
+    - name: install updates (Ubuntu)
+      tags: always
+      apt:
+        upgrade:  dist
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
+
+    - name: create pasare user
+      tags: always
+      user:
+        name: pasare
+        groups: root
+
+    - name: add SSH Key for pasare
+      tags: always
+      authorized_key:
+        user: pasare
+        key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID3Y2osc8mFJVOCE4LGyl3/psbjMBMbg9qYlM1kwOaog ANSIBLE"
+
+    - name: add SUDOERS file for PASARE
+      tags: always
+      copy:
+        src: sudoer_pasare
+        dest: /etc/sudoers.d/pasare
+        owner: root
+        group: root
+        mode: 0440
+
+
+- hosts: web_servers
+  become: true
+  tasks:
+
+    - name: install APACHE & PHP for UBUNTU Server
+      tags: apache,apache2,ubuntu
+      apt:
+        name:
+          - apache2
+          - libapache2-mod-php
+        state: latest
+      when: ansible_distribution == "Ubuntu"
+
+    - name: install APACHE & PHP for CentOS Server
+      tags: apache,httpd,CentOS
+      dnf:
+        name:
+          - httpd
+          - php
+        state: latest
+      when: ansible_distribution == "CentOS"      
+
+    - name: start APACHE for CentOS
+      tags: apache,httpd,CentOS
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+      when: ansible_distribution == "CentOS"      
+
+    - name: change e-mail address for admin/CentOS
+      tags: apache,httpd,CentOS
+      lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: 'ˆServerAdmin'
+        line: ServerAdmin madalinUP@acasa.com
+      when: ansible_distribution == "CentOS"
+      register: httpd
+
+    - name: re-start HTTPD for CentOS
+      tags: apache,httpd,CentOS
+      service:
+        name: httpd
+        state: restarted
+        enabled: yes
+      when: httpd.changed
