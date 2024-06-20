@@ -5,7 +5,7 @@ ansible_ssh_pass=VMware1!
 
 
 [web_servers]
-#172.19.224.232
+172.19.224.232
 172.19.224.241
 
 [workstations]

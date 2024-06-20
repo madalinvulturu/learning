@@ -1,0 +1,42 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+    - name: install updates (CentOS)
+      tags: always
+      dnf:
+        update_only:  yes
+        update_cache: yes
+      when: ansible_distribution == ""Ubuntu""
+
+- hosts: web_servers
+  become: true
+  tasks:
+
+    - name: copy default html file for site
+      copy:
+        src: default_site.html
+        dest: /var/www/html/index1.html
+        owner: root
+        group: root
+        mode: 0644
+
+- hosts: workstations
+  become: true
+  tasks:
+
+    - name: install unzip
+      package:
+        name: unzip
+    
+    - name: install terraform
+      unarchive:
+        src: https://releases.hashicorp.com/terraform/0.9.1/terraform_0.9.1_linux_amd64.zip
+        dest: /usr/local/bin
+        remote_src: yes
+        mode: 0755
+        owner: root
+                
+        
