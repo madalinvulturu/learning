@@ -23,13 +23,23 @@
   become: true
   tasks:
 
-    - name: copy default html file for site
-      copy:
-        src: default_site.html
-        dest: /var/www/html/index1.html
-        owner: root
-        group: root
-        mode: 0644
+    - name: install APACHE & PHP for UBUNTU Server
+      tags: apache,apache2,ubuntu
+      apt:
+        name:
+          - apache2
+          - libapache2-mod-php
+        state: latest
+      when: ansible_distribution == "Ubuntu"
+
+    - name: install APACHE & PHP for CentOS Server
+      tags: apache,httpd,CentOS
+      dnf:
+        name:
+          - httpd
+          - php
+        state: latest
+      when: ansible_distribution == "centOS"      
 
 - hosts: workstations
   become: true
