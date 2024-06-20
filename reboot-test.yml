@@ -30,12 +30,14 @@
         name:
           - apache2
           - lib2apache2-mod-php
+        state: latest
       when: ansible_distribution == "Ubuntu"
 
     - name: install apache&PHP udpates (CentOS)
       tags: apache,httpd,centos
-      apt:
+      dnf:
         name:
           - httpd
           - php
-      when: ansible_distribution == "CentOS"
+        state: latest
+      when: ansible_distribution == "CentOS""
