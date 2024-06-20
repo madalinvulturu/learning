@@ -41,6 +41,15 @@
         state: latest
       when: ansible_distribution == "CentOS"      
 
+    - name: start APACHE for CentOS
+      tags: apache,httpd,CentOS
+      service:
+        name: httpd
+        state: started
+      when: ansible_distribution == "CentOS"      
+
+
+
 #- hosts: workstations
 #  become: true
 #  tasks:
