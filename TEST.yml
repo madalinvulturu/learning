@@ -21,7 +21,7 @@
     - name: create pasare user
       tags: always
       user:
-        name:  pasare
+        name: pasare
         groups: root
 
     - name: add SSH Key for pasare
