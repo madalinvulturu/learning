@@ -39,7 +39,7 @@
           - httpd
           - php
         state: latest
-      when: ansible_distribution == "centOS"      
+      when: ansible_distribution == "CentOS"      
 
 #- hosts: workstations
 #  become: true
