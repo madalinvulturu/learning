@@ -53,10 +53,18 @@
       tags: apache,httpd,CentOS
       lineinfile:
         path: /etc/httpd/conf/httpd.conf
-        regexp: 'ˆServerAdmin'
+        regexp: 'ˆServerAdmin'å
         line: ServerAdmin madalin@acasa.com
-      when: ansible_distribution == "CentOS"      
+      when: ansible_distribution == "CentOS"
+      register: httpd
 
+    - name: start APACHE for CentOS
+      tags: apache,httpd,CentOS
+      service:
+        name: httpd
+        state: restarted
+        enabled: yes
+      when: httpd.changed
 
 
 #- hosts: workstations
