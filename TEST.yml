@@ -1,25 +1,4 @@
 ---
-- hosts: all
-  become: true
-  pre_tasks:
-  
-#    - name: POWEROFF
-#      command: /sbin/shutdown -h now
-  
-    - name: install udpates (CentOS)
-      tags: always
-      dnf:
-        update_only: yes
-        update_cache: yes
-      when: ansible_distribution == "CentOS"
-    
-    - name: install udpates (Ubuntu)
-      tags: always
-      apt:
-        upgrade: dist
-        update_cache: yes
-      when: ansible_distribution == "Ubuntu"
-
 - hosts: web_servers
   become: true
   tasks:
@@ -32,3 +11,21 @@
         owner: root
         group: root
         mode: 0644
+
+- hosts: workstations
+  become: true
+  tasks:
+
+    - name: install unzip
+      package:
+        name: unzip
+    
+    - name: install terraform
+      unarchive:
+        src: https://release.hashicorp.com/terraform/0.12.28/terraform_0.12.28_linux_amd64.zip
+        dest: /usr/local/bin
+        remote_src:
+        mode: 0755
+        owner: root
+                
+        

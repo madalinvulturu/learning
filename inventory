@@ -8,9 +8,11 @@ ansible_ssh_pass=VMware1!
 #172.19.224.232
 172.19.224.241
 
+[workstations]
+172.19.224.200
+
 [db_servers]
 172.19.224.242
 
 [file_server]
 172.19.224.243
-# inventory
