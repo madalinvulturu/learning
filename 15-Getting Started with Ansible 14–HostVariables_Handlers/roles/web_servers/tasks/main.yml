@@ -1,18 +1,18 @@
- - name: install web server packages
-   tags: apache,apache2,centos,httpd,ubuntu
+ - name: install httpd package (CentOS)
+   tags: apache,centos,httpd
    package:
      name:
-       - ""{apache_package_name}""
-       - ""{php_package_name}""
+       - "{{ apache_package_name }}"
+       - "{{ php_package_name }}"
      state: latest
    when: ansible_distribution == "CentOS"
- 
+
  - name: change e-mail address for admin
    tags: apache,centos,httpd
    lineinfile:
      path: /etc/httpd/conf/httpd.conf
      regexp: '^ServerAdmin'
-     line: ServerAdmin somebody@somewhere.net
+     line: ServerAdmin somebody@somewhere.com
    when: ansible_distribution == "CentOS"
    notify:
  
