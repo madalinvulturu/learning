@@ -1,8 +1,8 @@
  ---
  
- - hosts: all
-   become: true
-   pre_tasks:
+- hosts: all
+  become: true
+  pre_tasks:
  
    - name: update repository index (CentOS)
      tags: always
